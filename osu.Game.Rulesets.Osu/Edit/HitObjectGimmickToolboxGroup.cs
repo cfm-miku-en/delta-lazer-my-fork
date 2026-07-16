@@ -8,14 +8,14 @@ using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Threading;
+using osu.Game.Beatmaps.HitObjectGimmicks;
 using osu.Game.Beatmaps.SectionGimmicks;
-using osu.Game.Overlays;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
 using osu.Game.Graphics.UserInterfaceV2;
+using osu.Game.Overlays;
 using osu.Game.Overlays.Notifications;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Beatmaps.HitObjectGimmicks;
 using osuTK;
 using osuTK.Graphics;
 
@@ -24,7 +24,7 @@ namespace osu.Game.Rulesets.Osu.Edit
     public partial class HitObjectGimmickToolboxGroup : EditorToolboxGroup
     {
         [Resolved]
-        private osu.Game.Screens.Edit.EditorBeatmap editorBeatmap { get; set; } = null!;
+        private Screens.Edit.EditorBeatmap editorBeatmap { get; set; } = null!;
 
         [Resolved(canBeNull: true)]
         private INotificationOverlay? notifications { get; set; }
@@ -377,19 +377,19 @@ namespace osu.Game.Rulesets.Osu.Edit
             sectionTickRate.Current.BindValueChanged(_ => updateDifficultyOverrideDefaults());
         }
 
-        private void bindSlider(FormSliderBar<float> source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
+        private void bindSlider(FormSliderBar<float> source, Action<HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
             => source.Current.BindValueChanged(v => setSlider(source, setter, v.NewValue, clamp));
 
-        private void bindSlider(FormSliderBar<double> source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, double> setter, Func<double, double> clamp)
+        private void bindSlider(FormSliderBar<double> source, Action<HitObjectGimmickSettings, double> setter, Func<double, double> clamp)
             => source.Current.BindValueChanged(v => setSlider(source, setter, v.NewValue, clamp));
 
-        private void bindFloat(FormNumberBox source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
+        private void bindFloat(FormNumberBox source, Action<HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
             => source.OnCommit += (_, _) => setFloat(source, setter, clamp);
 
-        private void bindFloatOnCommitOnly(FormNumberBox source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
+        private void bindFloatOnCommitOnly(FormNumberBox source, Action<HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
             => source.OnCommit += (_, _) => setFloat(source, setter, clamp);
 
-        private void bindInt(FormNumberBox source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, int> setter, Func<int, int> clamp)
+        private void bindInt(FormNumberBox source, Action<HitObjectGimmickSettings, int> setter, Func<int, int> clamp)
             => source.OnCommit += (_, _) => setInt(source, setter, clamp);
 
         private void scheduleSelectionUpdate()
@@ -582,7 +582,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             fadeSchedules[slot] = Scheduler.AddDelayed(() => container.FadeTo(target, 150), 0);
         }
 
-        private void setBool(bool value, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, bool> setter)
+        private void setBool(bool value, Action<HitObjectGimmickSettings, bool> setter)
         {
             if (updatingControls)
                 return;
@@ -594,7 +594,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             scheduleSelectionUpdate();
         }
 
-        private void setFloat(FormNumberBox source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
+        private void setFloat(FormNumberBox source, Action<HitObjectGimmickSettings, float> setter, Func<float, float> clamp)
         {
             if (updatingControls)
                 return;
@@ -618,7 +618,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             scheduleSelectionUpdate();
         }
 
-        private void setInt(FormNumberBox source, Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, int> setter, Func<int, int> clamp)
+        private void setInt(FormNumberBox source, Action<HitObjectGimmickSettings, int> setter, Func<int, int> clamp)
         {
             if (updatingControls)
                 return;
@@ -643,7 +643,7 @@ namespace osu.Game.Rulesets.Osu.Edit
         }
 
         private void setSlider(FormSliderBar<float> source,
-                               Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, float> setter,
+                               Action<HitObjectGimmickSettings, float> setter,
                                float value,
                                Func<float, float> clamp)
         {
@@ -666,7 +666,7 @@ namespace osu.Game.Rulesets.Osu.Edit
         }
 
         private void setSlider(FormSliderBar<double> source,
-                               Action<osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings, double> setter,
+                               Action<HitObjectGimmickSettings, double> setter,
                                double value,
                                Func<double, double> clamp)
         {

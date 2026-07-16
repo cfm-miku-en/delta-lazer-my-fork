@@ -1,11 +1,10 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using NUnit.Framework;
 using System.Linq;
-using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.SectionGimmicks;
+using NUnit.Framework;
 using osu.Game.Beatmaps.HitObjectGimmicks;
+using osu.Game.Beatmaps.SectionGimmicks;
 using osu.Game.Rulesets.Osu.Edit;
 using osu.Game.Rulesets.Osu.Objects;
 using osu.Game.Screens.Edit;
@@ -18,14 +17,14 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestSetSelectionForceNoApproachCircleAddsAndRemovesEntries()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             var second = new HitCircle { StartTime = 1000, NewCombo = true, ComboOffset = 1 };
 
             beatmap.HitObjects.Add(first);
             beatmap.HitObjects.Add(second);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
 
             first.UpdateComboInformation(null);
@@ -52,14 +51,14 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestSelectionStateReflectsAppliedEntries()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             var second = new HitCircle { StartTime = 500, NewCombo = true, ComboOffset = 1 };
 
             beatmap.HitObjects.Add(first);
             beatmap.HitObjects.Add(second);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
 
             first.UpdateComboInformation(null);
@@ -95,11 +94,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestSetSelectionFloatSettingClampsOutOfRangeValues()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);
@@ -122,11 +121,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestSetSelectionFloatSettingAllowsUnsafeDifficultyOverrideValues()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);
@@ -147,11 +146,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestSetSelectionTickRateSupportsUnsafeNegativeValues()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);
@@ -169,11 +168,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestMovingHitObjectRetainsObjectBoundGimmickEntry()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);
@@ -182,7 +181,7 @@ namespace osu.Game.Rulesets.Osu.Tests
             model.SetSelectionForceNoApproachCircle(true);
 
             var entryBefore = editorBeatmap.HitObjectGimmicks.Entries.Single();
-            var objectId = first.GimmickObjectId;
+            long? objectId = first.GimmickObjectId;
 
             editorBeatmap.BeginChange();
             first.StartTime = 1500;
@@ -199,11 +198,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestUnsafeDifficultyOverridesAllowValuesPastNormalLimits()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);
@@ -224,11 +223,11 @@ namespace osu.Game.Rulesets.Osu.Tests
         [Test]
         public void TestUnsafeDifficultyOverridesAllowNegativeValuesPastNormalLimits()
         {
-            var beatmap = new osu.Game.Rulesets.Osu.Beatmaps.OsuBeatmap();
+            var beatmap = new Beatmaps.OsuBeatmap();
             var first = new HitCircle { StartTime = 500 };
             beatmap.HitObjects.Add(first);
 
-            beatmap.BeatmapInfo.Ruleset = new osu.Game.Rulesets.Osu.OsuRuleset().RulesetInfo;
+            beatmap.BeatmapInfo.Ruleset = new OsuRuleset().RulesetInfo;
             var editorBeatmap = new EditorBeatmap(beatmap, beatmapInfo: beatmap.BeatmapInfo);
             first.UpdateComboInformation(null);
             editorBeatmap.SelectedHitObjects.Add(first);

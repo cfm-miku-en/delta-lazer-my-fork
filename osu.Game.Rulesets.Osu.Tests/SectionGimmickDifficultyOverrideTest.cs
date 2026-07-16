@@ -1,10 +1,9 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
-using NUnit.Framework;
 using System.Linq;
+using NUnit.Framework;
 using osu.Game.Beatmaps;
-using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps.HitObjectGimmicks;
 using osu.Game.Beatmaps.SectionGimmicks;
 using osu.Game.Rulesets.Objects;
@@ -338,15 +337,15 @@ namespace osu.Game.Rulesets.Osu.Tests
             processor.PostProcess();
 
             // AR8 preempt is 750ms, AR10 preempt is 450ms
-            var ar8Preempt = 750;
-            var ar10Preempt = 450;
+            int ar8Preempt = 750;
+            int ar10Preempt = 450;
 
             // Section 0 object should have AR=8
             Assert.That(section0Object.TimePreempt, Is.EqualTo(ar8Preempt).Within(0.0001));
 
             // Section 1 early object should be halfway through gradual shift from AR8 to AR10
             // At 1500ms (progress 0.5), should be AR9 = (750 + 450) / 2 = 600ms
-            var ar9Preempt = 600;
+            int ar9Preempt = 600;
             Assert.That(section1EarlyObject.TimePreempt, Is.EqualTo(ar9Preempt).Within(0.0001));
 
             // Section 1 late object should have AR=10 (after gradual shift completes)
@@ -540,12 +539,12 @@ namespace osu.Game.Rulesets.Osu.Tests
             processor.PostProcess();
 
             // Inside section: AR should be HR AR(5*1.4=7)
-            var ar7Preempt = 900;
+            int ar7Preempt = 900;
             Assert.That(inside1.TimePreempt, Is.EqualTo(ar7Preempt).Within(0.0001));
             Assert.That(inside2.TimePreempt, Is.EqualTo(ar7Preempt).Within(0.0001));
 
             // Outside section: should return to base AR5 (not stay HR)
-            var ar5Preempt = 1200;
+            int ar5Preempt = 1200;
             Assert.That(outside.TimePreempt, Is.EqualTo(ar5Preempt).Within(0.0001));
 
             // Position should be restored outside section (no HR flip leakage)
@@ -852,10 +851,10 @@ namespace osu.Game.Rulesets.Osu.Tests
                 }
             });
 
-            Assert.That(osu.Game.Rulesets.Osu.UI.SectionGimmickFlashlightOverlay.HasAnyForcedFlashlightSection(beatmap), Is.True);
+            Assert.That(UI.SectionGimmickFlashlightOverlay.HasAnyForcedFlashlightSection(beatmap), Is.True);
 
             beatmap.SectionGimmicks.Sections[0].Settings.ForceFlashlight = false;
-            Assert.That(osu.Game.Rulesets.Osu.UI.SectionGimmickFlashlightOverlay.HasAnyForcedFlashlightSection(beatmap), Is.False);
+            Assert.That(UI.SectionGimmickFlashlightOverlay.HasAnyForcedFlashlightSection(beatmap), Is.False);
         }
 
         [Test]

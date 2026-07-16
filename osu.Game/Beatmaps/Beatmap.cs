@@ -2,17 +2,17 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
-using osu.Game.Beatmaps.Timing;
-using osu.Game.Rulesets.Objects;
 using System.Collections.Generic;
 using System.Linq;
-using osu.Game.Beatmaps.ControlPoints;
-using osu.Game.Beatmaps.HitObjectGimmicks;
-using osu.Game.Beatmaps.SectionGimmicks;
 using Newtonsoft.Json;
 using osu.Framework.Lists;
+using osu.Game.Beatmaps.ControlPoints;
 using osu.Game.Beatmaps.Formats;
+using osu.Game.Beatmaps.HitObjectGimmicks;
+using osu.Game.Beatmaps.SectionGimmicks;
+using osu.Game.Beatmaps.Timing;
 using osu.Game.IO.Serialization.Converters;
+using osu.Game.Rulesets.Objects;
 
 namespace osu.Game.Beatmaps
 {

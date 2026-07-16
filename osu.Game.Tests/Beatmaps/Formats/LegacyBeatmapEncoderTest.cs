@@ -533,16 +533,16 @@ namespace osu.Game.Tests.Beatmaps.Formats
         {
             var beatmap = new Beatmap
             {
-                HitObjectGimmicks = new osu.Game.Beatmaps.HitObjectGimmicks.BeatmapHitObjectGimmicks
+                HitObjectGimmicks = new BeatmapHitObjectGimmicks
                 {
                     Entries =
                     {
-                        new osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickEntry
+                        new HitObjectGimmickEntry
                         {
                             ObjectId = 12345,
                             StartTime = 1000,
                             ComboIndexWithOffsets = 2,
-                            Settings = new osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings
+                            Settings = new HitObjectGimmickSettings
                             {
                                 ForceNoApproachCircle = true,
                             }
@@ -568,16 +568,16 @@ namespace osu.Game.Tests.Beatmaps.Formats
         {
             var beatmap = new Beatmap
             {
-                HitObjectGimmicks = new osu.Game.Beatmaps.HitObjectGimmicks.BeatmapHitObjectGimmicks
+                HitObjectGimmicks = new BeatmapHitObjectGimmicks
                 {
                     Entries =
                     {
-                        new osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickEntry
+                        new HitObjectGimmickEntry
                         {
                             ObjectId = 12345,
                             StartTime = 1000,
                             ComboIndexWithOffsets = 2,
-                            Settings = new osu.Game.Beatmaps.HitObjectGimmicks.HitObjectGimmickSettings
+                            Settings = new HitObjectGimmickSettings
                             {
                                 EnableDifficultyOverrides = true,
                                 AllowUnsafeStackLeniencyOverrideValues = true,

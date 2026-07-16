@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using osu.Game.Beatmaps;
 using osu.Game.Beatmaps.HitObjectGimmicks;
 using osu.Game.Beatmaps.SectionGimmicks;
@@ -20,12 +19,11 @@ namespace osu.Game.Rulesets.Osu.Scoring
         private BeatmapHitObjectGimmicks hitObjectGimmicks = new BeatmapHitObjectGimmicks();
         private Dictionary<long, HitObjectGimmickSettings> objectSettingsById = new Dictionary<long, HitObjectGimmickSettings>();
         private Dictionary<(double StartTime, int ComboIndexWithOffsets), HitObjectGimmickSettings> objectSettingsLookup = new Dictionary<(double StartTime, int ComboIndexWithOffsets), HitObjectGimmickSettings>();
-        private SectionGimmickSection? activeSection;
         private double activeSectionAccuracyBaseScore;
         private double activeSectionAccuracyMaxBaseScore;
         private bool activeSectionAccuracyRequirementEvaluated;
 
-        public SectionGimmickSection? ActiveSection => activeSection;
+        public SectionGimmickSection? ActiveSection { get; private set; }
 
         public SectionGimmickHealthProcessor(double drainStartTime)
             : base(drainStartTime)
@@ -65,7 +63,7 @@ namespace osu.Game.Rulesets.Osu.Scoring
 
         protected override void ApplyResultInternal(JudgementResult result)
         {
-            if (activeSection != null && activeSection.EndTime >= 0 && result.HitObject.StartTime > activeSection.EndTime)
+            if (ActiveSection != null && ActiveSection.EndTime >= 0 && result.HitObject.StartTime > ActiveSection.EndTime)
             {
                 if (evaluateActiveSectionAccuracyRequirementIfNeeded(result.HitObject.StartTime))
                     return;
@@ -201,13 +199,13 @@ namespace osu.Game.Rulesets.Osu.Scoring
 
             if (section == null)
             {
-                activeSection = null;
+                ActiveSection = null;
                 return null;
             }
 
-            if (activeSection?.Id != section.Id)
+            if (ActiveSection?.Id != section.Id)
             {
-                activeSection = section;
+                ActiveSection = section;
                 countTracker.EnterSection(section.Id);
                 activeSectionAccuracyBaseScore = 0;
                 activeSectionAccuracyMaxBaseScore = 0;
@@ -254,7 +252,7 @@ namespace osu.Game.Rulesets.Osu.Scoring
             return !hpGimmickAlreadyPunishes;
         }
 
-        private HitObjectGimmickSettings? resolveObjectSettings(osu.Game.Rulesets.Objects.HitObject hitObject)
+        private HitObjectGimmickSettings? resolveObjectSettings(Rulesets.Objects.HitObject hitObject)
         {
             if (hitObject is not OsuHitObject osuHitObject)
                 return null;
@@ -345,16 +343,16 @@ namespace osu.Game.Rulesets.Osu.Scoring
 
         private bool evaluateActiveSectionAccuracyRequirementIfNeeded(double time)
         {
-            if (activeSection == null || activeSectionAccuracyRequirementEvaluated)
+            if (ActiveSection == null || activeSectionAccuracyRequirementEvaluated)
                 return false;
 
-            if (!activeSection.Settings.EnableAccuracyRequirement)
+            if (!ActiveSection.Settings.EnableAccuracyRequirement)
             {
                 activeSectionAccuracyRequirementEvaluated = true;
                 return false;
             }
 
-            if (!hasSectionEnded(activeSection, time))
+            if (!hasSectionEnded(ActiveSection, time))
                 return false;
 
             activeSectionAccuracyRequirementEvaluated = true;
@@ -363,7 +361,7 @@ namespace osu.Game.Rulesets.Osu.Scoring
                 ? activeSectionAccuracyBaseScore / activeSectionAccuracyMaxBaseScore
                 : 1;
 
-            if (!meetsRequiredAccuracy(currentSectionAccuracy, activeSection.Settings.RequiredAccuracy))
+            if (!meetsRequiredAccuracy(currentSectionAccuracy, ActiveSection.Settings.RequiredAccuracy))
             {
                 TriggerFailure();
                 return true;

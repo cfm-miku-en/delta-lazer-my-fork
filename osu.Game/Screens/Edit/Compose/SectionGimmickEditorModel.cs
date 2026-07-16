@@ -25,8 +25,7 @@ namespace osu.Game.Screens.Edit.Compose
         {
             this.editorBeatmap = editorBeatmap;
 
-            if (this.editorBeatmap.SectionGimmicks == null)
-                this.editorBeatmap.SectionGimmicks = new BeatmapSectionGimmicks();
+            this.editorBeatmap.SectionGimmicks ??= new BeatmapSectionGimmicks();
 
             syncFromBeatmap();
         }

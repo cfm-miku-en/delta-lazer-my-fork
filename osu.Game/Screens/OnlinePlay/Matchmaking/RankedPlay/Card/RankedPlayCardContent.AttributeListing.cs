@@ -97,7 +97,7 @@ namespace osu.Game.Screens.OnlinePlay.Matchmaking.RankedPlay.Card
                                 },
                             ]
                         },
-                        ..ruleset.GetBeatmapAttributesForDisplay(beatmap, [])
+                        .. ruleset.GetBeatmapAttributesForDisplay(beatmap, [])
                                  .Select(attribute => new AttributeRow(attribute))
                     ]
                 };

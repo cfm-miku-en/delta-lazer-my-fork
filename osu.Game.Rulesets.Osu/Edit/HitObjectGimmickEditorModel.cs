@@ -159,7 +159,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             var objectIdLookup = createObjectIdLookup(editorBeatmap.HitObjectGimmicks ?? new BeatmapHitObjectGimmicks());
             var lookup = createLookup(editorBeatmap.HitObjectGimmicks ?? new BeatmapHitObjectGimmicks());
 
-            bool getBoolState(System.Func<HitObjectGimmickSettings, bool> getter)
+            bool getBoolState(Func<HitObjectGimmickSettings, bool> getter)
                 => selected.All(h => tryGetSettings(h, objectIdLookup, lookup, out var settings) && getter(settings));
 
             var first = selected[0];
@@ -224,7 +224,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             editorBeatmap.EndChange();
         }
 
-        public void SetSelectionBoolSetting(System.Action<HitObjectGimmickSettings, bool> setter, bool enabled)
+        public void SetSelectionBoolSetting(Action<HitObjectGimmickSettings, bool> setter, bool enabled)
         {
             var selected = editorBeatmap.SelectedHitObjects.OfType<OsuHitObject>().ToList();
             HitObjectGimmickBindingUtils.EnsureObjectIds(selected);
@@ -270,7 +270,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             editorBeatmap.EndChange();
         }
 
-        public void SetSelectionFloatSetting(System.Action<HitObjectGimmickSettings, float> setter, float value)
+        public void SetSelectionFloatSetting(Action<HitObjectGimmickSettings, float> setter, float value)
         {
             var selected = editorBeatmap.SelectedHitObjects.OfType<OsuHitObject>().ToList();
             HitObjectGimmickBindingUtils.EnsureObjectIds(selected);
@@ -294,7 +294,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             editorBeatmap.EndChange();
         }
 
-        public void SetSelectionIntSetting(System.Action<HitObjectGimmickSettings, int> setter, int value)
+        public void SetSelectionIntSetting(Action<HitObjectGimmickSettings, int> setter, int value)
         {
             var selected = editorBeatmap.SelectedHitObjects.OfType<OsuHitObject>().ToList();
             HitObjectGimmickBindingUtils.EnsureObjectIds(selected);
@@ -318,7 +318,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             editorBeatmap.EndChange();
         }
 
-        public void SetSelectionDoubleSetting(System.Action<HitObjectGimmickSettings, double> setter, double value)
+        public void SetSelectionDoubleSetting(Action<HitObjectGimmickSettings, double> setter, double value)
         {
             var selected = editorBeatmap.SelectedHitObjects.OfType<OsuHitObject>().ToList();
             HitObjectGimmickBindingUtils.EnsureObjectIds(selected);
@@ -443,7 +443,7 @@ namespace osu.Game.Rulesets.Osu.Edit
             cleanupEntryIfEmpty(gimmicks, existing);
         }
 
-        private bool getSelectionBoolState(System.Func<HitObjectGimmickSettings, bool> getter)
+        private bool getSelectionBoolState(Func<HitObjectGimmickSettings, bool> getter)
         {
             var selected = editorBeatmap.SelectedHitObjects.OfType<OsuHitObject>().ToList();
             HitObjectGimmickBindingUtils.EnsureObjectIds(selected);

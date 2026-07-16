@@ -562,7 +562,7 @@ namespace osu.Game.Rulesets.Osu.UI
         private SectionGimmickSettings? resolveSettingsAtTime(double time)
             => SectionGimmickSectionResolver.Resolve(gimmicks, time)?.Settings;
 
-        private SectionGimmickSettings? resolveSettingsForHitObject(osu.Game.Rulesets.Objects.HitObject hitObject)
+        private SectionGimmickSettings? resolveSettingsForHitObject(Rulesets.Objects.HitObject hitObject)
         {
             if (hitObject is not OsuHitObject osuHitObject)
                 return null;

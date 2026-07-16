@@ -214,7 +214,6 @@ namespace osu.Game.Rulesets.Osu.Difficulty.Preprocessing
             float scalingFactor = NORMALISED_RADIUS / (float)BaseObject.Radius;
 
             var lastDifficultyObject = Previous() as OsuDifficultyHitObject;
-            var lastLastDifficultyObject = Previous(1) as OsuDifficultyHitObject;
 
             Vector2 lastCursorPosition = lastDifficultyObject != null ? getEndCursorPosition(lastDifficultyObject) : LastObject.StackedPosition;
 
@@ -253,7 +252,7 @@ namespace osu.Game.Rulesets.Osu.Difficulty.Preprocessing
                 MinimumJumpDistance = Math.Max(0, Math.Min(LazyJumpDistance - (maximum_slider_radius - assumed_slider_radius), tailJumpDistance - maximum_slider_radius));
             }
 
-            if (lastLastDifficultyObject != null && lastLastDifficultyObject.BaseObject is not Spinner)
+            if (Previous(1) is OsuDifficultyHitObject lastLastDifficultyObject && lastLastDifficultyObject.BaseObject is not Spinner)
             {
                 if (lastDifficultyObject!.BaseObject is Slider prevSlider && lastDifficultyObject.TravelDistance > 0)
                     lastCursorPosition = prevSlider.HeadCircle.StackedPosition;

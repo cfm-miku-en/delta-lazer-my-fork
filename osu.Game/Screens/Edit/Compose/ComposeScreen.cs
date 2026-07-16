@@ -3,8 +3,8 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
@@ -12,12 +12,12 @@ using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
 using osu.Framework.Platform;
 using osu.Game.Beatmaps;
+using osu.Game.Beatmaps.HitObjectGimmicks;
 using osu.Game.Configuration;
 using osu.Game.Extensions;
 using osu.Game.IO.Serialization;
 using osu.Game.Rulesets;
 using osu.Game.Rulesets.Edit;
-using osu.Game.Beatmaps.HitObjectGimmicks;
 using osu.Game.Screens.Edit.Compose.Components.Timeline;
 
 namespace osu.Game.Screens.Edit.Compose
@@ -192,7 +192,7 @@ namespace osu.Game.Screens.Edit.Compose
             var sourceGimmicks = HitObjectGimmickBindingUtils.CloneGimmicks(EditorBeatmap.HitObjectGimmicks ?? new BeatmapHitObjectGimmicks());
             var sourceLookupByObjectId = HitObjectGimmickBindingUtils.CreateLookupByObjectId(sourceGimmicks);
             var sourceLookupByLegacy = HitObjectGimmickBindingUtils.CreateLookupByLegacyKey(sourceGimmicks);
-            var copiedSettingsByObject = new Dictionary<osu.Game.Rulesets.Objects.HitObject, HitObjectGimmickSettings>();
+            var copiedSettingsByObject = new Dictionary<Rulesets.Objects.HitObject, HitObjectGimmickSettings>();
 
             Debug.Assert(objects.Any());
 
@@ -225,7 +225,7 @@ namespace osu.Game.Screens.Edit.Compose
                 {
                     ObjectId = h.GimmickObjectId,
                     StartTime = h.StartTime,
-                    ComboIndexWithOffsets = (h as osu.Game.Rulesets.Objects.Types.IHasComboInformation)?.ComboIndexWithOffsets ?? 0,
+                    ComboIndexWithOffsets = (h as Rulesets.Objects.Types.IHasComboInformation)?.ComboIndexWithOffsets ?? 0,
                     Settings = HitObjectGimmickBindingUtils.CloneSettings(sourceSettings),
                 });
             }

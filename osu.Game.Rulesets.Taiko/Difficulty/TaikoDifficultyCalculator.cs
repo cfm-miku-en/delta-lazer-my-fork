@@ -111,11 +111,12 @@ namespace osu.Game.Rulesets.Taiko.Difficulty
             double rhythmSkill = rhythm.DifficultyValue() * rhythm_skill_multiplier;
             double readingSkill = reading.DifficultyValue() * reading_skill_multiplier;
             double colourSkill = colour.DifficultyValue() * colour_skill_multiplier;
-            double staminaSkill = stamina.DifficultyValue() * stamina_skill_multiplier;
+            double staminaDifficultyValue = stamina.DifficultyValue();
+            double staminaSkill = staminaDifficultyValue * stamina_skill_multiplier;
             double monoStaminaSkill = singleColourStamina.DifficultyValue() * stamina_skill_multiplier;
             double monoStaminaFactor = staminaSkill == 0 ? 1 : Math.Pow(monoStaminaSkill / staminaSkill, 5);
 
-            double staminaDifficultStrains = stamina.CountTopWeightedStrains();
+            double staminaDifficultStrains = stamina.CountTopWeightedStrains(staminaDifficultyValue);
 
             // As we don't have pattern integration in osu!taiko, we apply the other two skills relative to rhythm.
             patternMultiplier = Math.Pow(staminaSkill * colourSkill, 0.10);
@@ -184,10 +185,10 @@ namespace osu.Game.Rulesets.Taiko.Difficulty
             }
 
             List<double> hitObjectStrainPeaks = combinePeaks(
-                rhythm.GetObjectStrains().ToList(),
-                reading.GetObjectStrains().ToList(),
-                colour.GetObjectStrains().ToList(),
-                stamina.GetObjectStrains().ToList()
+                rhythm.GetObjectDifficulties().ToList(),
+                reading.GetObjectDifficulties().ToList(),
+                colour.GetObjectDifficulties().ToList(),
+                stamina.GetObjectDifficulties().ToList()
             );
 
             if (hitObjectStrainPeaks.Count == 0)

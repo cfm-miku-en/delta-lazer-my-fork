@@ -3,20 +3,20 @@
 
 #nullable disable
 
-using osu.Framework.Graphics;
-using osu.Framework.Graphics.Containers;
 using System.Collections.Generic;
 using System.Linq;
 using osu.Framework.Allocation;
 using osu.Framework.Extensions;
-using osu.Game.Graphics;
-using osu.Game.Graphics.Sprites;
 using osu.Framework.Extensions.IEnumerableExtensions;
 using osu.Framework.Extensions.LocalisationExtensions;
+using osu.Framework.Graphics;
+using osu.Framework.Graphics.Containers;
+using osu.Framework.Localisation;
+using osu.Game.Graphics;
+using osu.Game.Graphics.Sprites;
 using osu.Game.Users;
 using osu.Game.Users.Drawables;
 using osuTK;
-using osu.Framework.Localisation;
 
 namespace osu.Game.Overlays.Rankings.Tables
 {
@@ -97,7 +97,7 @@ namespace osu.Game.Overlays.Rankings.Tables
             Children =
             [
                 new UpdateableFlag(GetCountryCode(item)) { Size = new Vector2(28, 20) },
-                ..CreateFlagContent(item)
+                .. CreateFlagContent(item)
             ]
         };
 

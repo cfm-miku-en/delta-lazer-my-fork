@@ -161,9 +161,9 @@ namespace osu.Game.Rulesets.Osu.UI
                 return settings.FlashlightRadius;
 
             double progress = Math.Clamp((currentTime - section.StartTime) / (gradualEnd - section.StartTime), 0, 1);
-            const float defaultRadius = 125f;
-            const float shrinkStartRadius = 400f;
-            float startRadius = settings.EnableGradualFlashlightRadiusChange ? shrinkStartRadius : defaultRadius;
+            const float default_radius = 125f;
+            const float shrink_start_radius = 400f;
+            float startRadius = settings.EnableGradualFlashlightRadiusChange ? shrink_start_radius : default_radius;
 
             return (float)(startRadius + (settings.FlashlightRadius - startRadius) * progress);
         }

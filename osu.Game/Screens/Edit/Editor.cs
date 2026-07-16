@@ -611,7 +611,7 @@ namespace osu.Game.Screens.Edit
             return true;
         }
 
-        public void ApplySectionGimmicksToWholeMapset(Beatmaps.SectionGimmicks.BeatmapSectionGimmicks source)
+        public void ApplySectionGimmicksToWholeMapset(BeatmapSectionGimmicks source)
         {
             if (source == null)
                 return;
@@ -630,12 +630,12 @@ namespace osu.Game.Screens.Edit
             }
         }
 
-        internal static bool TryApplySectionGimmicksToTargetBeatmap(IBeatmap target, Beatmaps.SectionGimmicks.BeatmapSectionGimmicks source)
+        internal static bool TryApplySectionGimmicksToTargetBeatmap(IBeatmap target, BeatmapSectionGimmicks source)
         {
             if (target == null || source == null)
                 return false;
 
-            target.SectionGimmicks = Compose.SectionGimmickEditorModel.CloneGimmicks(source);
+            target.SectionGimmicks = SectionGimmickEditorModel.CloneGimmicks(source);
             return true;
         }
 

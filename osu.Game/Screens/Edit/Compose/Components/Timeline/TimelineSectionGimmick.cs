@@ -10,7 +10,6 @@ using osu.Framework.Graphics.Shapes;
 using osu.Game.Beatmaps.SectionGimmicks;
 using osu.Game.Graphics;
 using osu.Game.Graphics.Sprites;
-using osuTK;
 using osuTK.Graphics;
 
 namespace osu.Game.Screens.Edit.Compose.Components.Timeline
@@ -26,9 +25,7 @@ namespace osu.Game.Screens.Edit.Compose.Components.Timeline
 
         private Color4 baseColour;
 
-        private bool isSelected;
-
-        public bool IsSelected => isSelected;
+        public bool IsSelected { get; private set; }
 
         public TimelineSectionGimmick(SectionGimmickSection section)
         {
@@ -69,7 +66,7 @@ namespace osu.Game.Screens.Edit.Compose.Components.Timeline
             updateSelectedState();
         }
 
-        protected override bool OnClick(osu.Framework.Input.Events.ClickEvent e)
+        protected override bool OnClick(Framework.Input.Events.ClickEvent e)
         {
             OnSelected?.Invoke(Section.Id);
             return true;
@@ -83,10 +80,10 @@ namespace osu.Game.Screens.Edit.Compose.Components.Timeline
 
         public void SetSelected(bool selected)
         {
-            if (isSelected == selected)
+            if (IsSelected == selected)
                 return;
 
-            isSelected = selected;
+            IsSelected = selected;
             updateSelectedState();
         }
 
@@ -95,8 +92,8 @@ namespace osu.Game.Screens.Edit.Compose.Components.Timeline
             if (background == null)
                 return;
 
-            background.FadeColour(isSelected ? baseColour.Lighten(0.5f) : baseColour, 200, Easing.OutQuint);
-            background.FadeTo(isSelected ? 0.9f : 0.45f, 200, Easing.OutQuint);
+            background.FadeColour(IsSelected ? baseColour.Lighten(0.5f) : baseColour, 200, Easing.OutQuint);
+            background.FadeTo(IsSelected ? 0.9f : 0.45f, 200, Easing.OutQuint);
         }
     }
 }
